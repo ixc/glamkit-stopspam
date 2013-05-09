@@ -5,10 +5,11 @@ from django.utils.safestring import mark_safe
 
 # RECAPTCHA widgets
 class RecaptchaResponse(forms.Widget):
+    is_hidden = True
 
     def render(self, *args, **kwargs):
         from recaptcha.client import captcha as recaptcha
-        recaptcha_options = "<script> var RecaptchaOptions = { theme: '" + self.theme + \
+        recaptcha_options = u"<script> var RecaptchaOptions = { theme: '" + self.theme + \
                             "', lang: '" + get_language()[0:2] + \
                             ("', custom_theme_widget: 'recaptcha_widget'" if self.theme == 'custom' else "'") + " }; </script>\n"
         return mark_safe(recaptcha_options + recaptcha.displayhtml(self.public_key))
