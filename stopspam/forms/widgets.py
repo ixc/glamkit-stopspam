@@ -12,7 +12,8 @@ class RecaptchaResponse(forms.Widget):
         recaptcha_options = u"<script> var RecaptchaOptions = { theme: '" + self.theme + \
                             "', lang: '" + get_language()[0:2] + \
                             ("', custom_theme_widget: 'recaptcha_widget'" if self.theme == 'custom' else "'") + " }; </script>\n"
-        return mark_safe(recaptcha_options + recaptcha.displayhtml(self.public_key))
+        return mark_safe(recaptcha_options + recaptcha.displayhtml(
+            self.public_key, use_ssl=self.use_ssl))
 
 
 class RecaptchaChallenge(forms.Widget):
